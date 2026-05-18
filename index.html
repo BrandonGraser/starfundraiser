@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>S.T.A.R. Golf Classic 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --green-dark: #1a3d2b;
+      --green-mid: #2d6a4f;
+      --green-light: #52b788;
+      --gold: #d4a017;
+      --gold-light: #f0c040;
+      --cream: #faf6ef;
+      --warm-white: #fffdf8;
+      --charcoal: #1c1c1c;
+      --text-mid: #3d3d3d;
+      --text-light: #6b6b6b;
+      --silver: #7a8fa6;
+      --bronze: #a0673a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ─────────────────────────────────── */
+    .hero {
+      position: relative;
+      background: var(--green-dark);
+      background-image: url('images/hero-bg.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 72px 24px 0;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 40, 25, 0.72);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        180deg,
+        transparent 0px,
+        transparent 38px,
+        rgba(255,255,255,0.025) 38px,
+        rgba(255,255,255,0.025) 40px
+      );
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--green-dark);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .star-subtitle {
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-top: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 24px auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .event-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 10px;
+    }
+
+    .event-location {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      position: relative;
+      z-index: 2;
+      margin-bottom: 36px;
+    }
+
+    /* Stat row */
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 760px;
+      margin-bottom: 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-item {
+      flex: 1 1 140px;
+      padding: 22px 16px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .stat-value.gold { color: var(--gold-light); }
+
+    /* scroll cta */
+    .scroll-cta {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 24px 0 28px;
+    }
+
+    .scroll-arrow {
+      width: 16px;
+      height: 16px;
+      border-right: 2px solid rgba(255,255,255,0.25);
+      border-bottom: 2px solid rgba(255,255,255,0.25);
+      transform: rotate(45deg);
+      animation: bounce 1.8s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(5px); }
+    }
+
+    /* ─── MISSION STRIP ─────────────────────────── */
+    .mission-strip {
+      background: var(--gold);
+      padding: 16px 24px;
+      text-align: center;
+    }
+
+    .mission-strip p {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--green-dark);
+      text-transform: uppercase;
+    }
+
+    /* ─── SECTION COMMON ────────────────────────── */
+    section {
+      padding: 72px 24px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 16px;
+    }
+
+    .section-lead {
+      font-size: 1rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      max-width: 600px;
+    }
+
+    /* ─── SPONSORSHIP ───────────────────────────── */
+    .sponsor-section {
+      background: var(--green-dark);
+    }
+
+    .sponsor-section .section-eyebrow { color: var(--gold-light); }
+    .sponsor-section .section-title { color: #fff; }
+    .sponsor-section .section-lead { color: rgba(255,255,255,0.65); }
+
+    .sponsor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .sponsor-card {
+      border-radius: 10px;
+      padding: 28px 22px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .sponsor-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+    }
+
+    .sponsor-card.selected {
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.4), 0 12px 36px rgba(0,0,0,0.3);
+    }
+
+    .sponsor-card.gold-tier {
+      background: linear-gradient(135deg, #d4a017 0%, #f0c040 100%);
+      color: var(--green-dark);
+    }
+
+    .sponsor-card.silver-tier {
+      background: linear-gradient(135deg, #6b7f96 0%, #9bafc2 100%);
+      color: #fff;
+    }
+
+    .sponsor-card.bronze-tier {
+      background: linear-gradient(135deg, #8b5a2b 0%, #c47c3e 100%);
+      color: #fff;
+    }
+
+    .sponsor-card.hole-tier {
+      background: linear-gradient(135deg, var(--green-mid) 0%, #40916c 100%);
+      color: #fff;
+    }
+
+    .sponsor-card.dinner-tier {
+      background: rgba(255,255,255,0.06);
+      border: 2px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .sponsor-tier-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .sponsor-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .sponsor-perks {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      line-height: 1.7;
+    }
+
+    .sponsor-check {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 24px;
+      height: 24px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .sponsor-card.selected .sponsor-check { opacity: 1; }
+
+    /* ─── REGISTRATION FORM ─────────────────────── */
+    .form-section {
+      background: var(--warm-white);
+    }
+
+    .form-wrapper {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.07);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+      overflow: hidden;
+      margin-top: 40px;
+    }
+
+    .form-header {
+      background: var(--green-dark);
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .form-header-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .form-header-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+
+    .form-header-text p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 2px;
+    }
+
+    .form-body {
+      padding: 36px;
+    }
+
+    .form-section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-mid);
+      letter-spacing: 0.04em;
+    }
+
+    label span.req {
+      color: #c0392b;
+      margin-left: 2px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #e0ddd8;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      background: var(--cream);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(45,106,79,0.12);
+      background: #fff;
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    .teammate-block {
+      background: var(--cream);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+
+    .teammate-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 14px;
+      letter-spacing: 0.06em;
+    }
+
+    .form-divider {
+      height: 1px;
+      background: rgba(0,0,0,0.07);
+      margin: 28px 0;
+    }
+
+    /* Registration type selector */
+    .reg-type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .reg-type-btn {
+      border: 2px solid #e0ddd8;
+      border-radius: 10px;
+      padding: 16px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--cream);
+    }
+
+    .reg-type-btn:hover {
+      border-color: var(--green-mid);
+    }
+
+    .reg-type-btn.active {
+      border-color: var(--green-mid);
+      background: rgba(45,106,79,0.07);
+    }
+
+    .reg-type-btn .type-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    .reg-type-btn .type-name { font-size: 0.82rem; font-weight: 700; color: var(--green-dark); }
+    .reg-type-btn .type-price { font-size: 0.75rem; color: var(--text-light); margin-top: 2px; }
+
+    /* Selection summary */
+    .order-summary {
+      background: var(--green-dark);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-top: 24px;
+      color: #fff;
+    }
+
+    .order-summary h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      margin-bottom: 14px;
+      color: var(--gold-light);
+    }
+
+    .order-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      padding: 5px 0;
+      color: rgba(255,255,255,0.8);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
+      font-weight: 700;
+      padding-top: 12px;
+      margin-top: 4px;
+      color: var(--gold-light);
+    }
+
+    /* Submit */
+    .submit-area {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 17px 24px;
+      background: var(--green-mid);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(26,61,43,0.3);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    .btn-submit:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .payment-note {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .payment-note a { color: var(--green-mid); }
+
+    /* ─── SUCCESS STATE ─────────────────────────── */
+    .success-overlay {
+      display: none;
+      background: rgba(26,61,43,0.97);
+      border-radius: 16px;
+      padding: 60px 36px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .success-overlay.show { display: block; }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 24px;
+    }
+
+    .success-overlay h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      color: var(--gold-light);
+    }
+
+    .success-overlay p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    /* ─── FOOTER ────────────────────────────────── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 40px 24px;
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+
+    footer strong { color: #fff; }
+    footer a { color: var(--gold-light); text-decoration: none; }
+
+    /* ─── TOAST ─────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--green-dark);
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+      z-index: 999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.error { background: #8b2020; }
+
+    /* ─── MISC ──────────────────────────────────── */
+    .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+      .form-body { padding: 22px 18px; }
+      .form-header { padding: 22px 18px; }
+      section { padding: 52px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── MISSION STRIP ─────────────────────────────── -->
+<div class="mission-strip">
+  <p>Every dollar raised supports life-saving resources for the unhoused community in the Lehigh Valley</p>
+</div>
+
+<section class="hero">
+  <div class="hero-badge">Annual Fundraiser · 2026</div>
+
+  <div class="star-logo-svg" style="position:relative;z-index:2;width:160px;margin-bottom:8px;">
+    <img src="images/STARLogo.svg" alt="S.T.A.R. Logo" width="160" height="90" />
+  </div>
+
+  <div class="star-subtitle">Serving To Aid &amp; Restore · Bethlehem, PA</div>
+
+  <div class="hero-divider"></div>
+
+  <div class="event-title">Golf Classic 2026</div>
+  <div class="event-location">Green Pond Country Club &nbsp;·&nbsp; 3604 Farmersville Rd, Bethlehem, PA 18020</div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-label">Date</div>
+      <div class="stat-value">Sun, June 28<br>2026</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Registration</div>
+      <div class="stat-value">12:00 PM</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Shotgun Start</div>
+      <div class="stat-value gold">1:30 PM Sharp</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Entry Fee</div>
+      <div class="stat-value gold">$125 / golfer</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Deadline</div>
+      <div class="stat-value">June 10, 2026</div>
+    </div>
+  </div>
+
+  <div class="scroll-cta">
+    Register Below
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ─── SPONSORSHIP ────────────────────────────────── -->
+<section class="sponsor-section">
+  <div class="container" style="text-align:center;">
+    <div class="section-title">Make a Bigger Impact</div>
+    <div class="section-lead" style="margin:0 auto;">
+      Sponsoring the Golf Classic puts your company or name front-and-center while directly funding outreach to our most vulnerable neighbors. Select a tier in the registration form below.
+    </div>
+
+    <div class="sponsor-grid">
+      <div class="sponsor-card gold-tier">
+        <div class="sponsor-check">✓</div>
+        <div class="sponsor-tier-name">Gold Sponsor</div>
+        <div class="sponsor-price">$950</div>
+        <div class="sponsor-perks">Whole page ad in program<br>1 Foursome included<br>Signage at event</div>
+      </div>
+      <div class="sponsor-card silver-tier">
+        <div class="sponsor-check">✓</div>
+        <div class="sponsor-tier-name">Silver Sponsor</div>
+        <div class="sponsor-price">$650</div>
+        <div class="sponsor-perks">½ page ad in program<br>1 Twosome included<br>Signage at event</div>
+      </div>
+      <div class="sponsor-card bronze-tier">
+        <div class="sponsor-check">✓</div>
+        <div class="sponsor-tier-name">Bronze Sponsor</div>
+        <div class="sponsor-price">$500</div>
+        <div class="sponsor-perks">3.5×2" ad in program<br>1 Twosome included<br>Signage at event</div>
+      </div>
+      <div class="sponsor-card hole-tier">
+        <div class="sponsor-check">✓</div>
+        <div class="sponsor-tier-name">Hole Sponsor</div>
+        <div class="sponsor-price">$100</div>
+        <div class="sponsor-perks">Signage at a hole<br>Recognition in program</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REGISTRATION FORM ──────────────────────────── -->
+<section class="form-section" id="register">
+  <div class="container">
+    <div class="section-eyebrow">Registration</div>
+    <div class="section-title">Reserve Your Spot</div>
+    <div class="section-lead">
+      Fill out the form below to register as a golfer, team, sponsor, or dinner guest. Payment instructions are provided upon submission.
+    </div>
+
+    <div class="form-wrapper" id="formWrapper">
+
+      <!-- SUCCESS -->
+      <div class="success-overlay" id="successOverlay">
+        <div class="success-icon">⛳</div>
+        <h3>You're Registered!</h3>
+        <p>
+          Thank you for supporting S.T.A.R. Golf Classic 2026.<br><br>
+          You'll receive a confirmation email shortly. Payment can be made by check payable to <strong>S.T.A.R. Serving to Aid and Restore</strong> mailed to 75 E. Market Street, Bethlehem PA 18018, or via <strong>Venmo @S.T.A.R.S.T.A.R.@starbethlehempa</strong>.
+        </p>
+      </div>
+
+      <!-- FORM -->
+      <div id="mainForm">
+        <div class="form-header">
+          <div class="form-header-icon">📋</div>
+          <div class="form-header-text">
+            <h3>Golf Classic Registration Form</h3>
+            <p>All fields marked with * are required</p>
+          </div>
+        </div>
+
+        <div class="form-body">
+
+          <!-- REGISTRATION TYPE -->
+          <div class="form-section-label">What are you registering for?</div>
+          <div class="reg-type-grid" id="regTypeGrid">
+            <div class="reg-type-btn" data-type="individual" onclick="selectRegType(this)">
+              <div class="type-icon">🏌️</div>
+              <div class="type-name">Individual Golfer</div>
+              <div class="type-price">$125 / person</div>
+            </div>
+            <div class="reg-type-btn" data-type="team" onclick="selectRegType(this)">
+              <div class="type-icon">👥</div>
+              <div class="type-name">Team (Foursome)</div>
+              <div class="type-price">$125 × 4</div>
+            </div>
+            <div class="reg-type-btn" data-type="sponsor" onclick="selectRegType(this)">
+              <div class="type-icon">🏆</div>
+              <div class="type-name">Sponsor Only</div>
+              <div class="type-price">No golf</div>
+            </div>
+            <div class="reg-type-btn" data-type="dinner" onclick="selectRegType(this)">
+              <div class="type-icon">🍽️</div>
+              <div class="type-name">Dinner Guest</div>
+              <div class="type-price">$40 / person</div>
+            </div>
+          </div>
+
+          <!-- GOLFER SECTION -->
+          <div id="golferSection" class="hidden">
+            <div class="form-section-label">Team Leader / Individual Golfer</div>
+            <div class="form-group">
+              <div class="field">
+                <label>Full Name <span class="req">*</span></label>
+                <input type="text" id="leaderName" placeholder="Jane Smith"/>
+              </div>
+              <div class="field">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" id="leaderEmail" placeholder="jane@example.com"/>
+              </div>
+              <div class="field">
+                <label>Phone Number <span class="req">*</span></label>
+                <input type="tel" id="leaderPhone" placeholder="(610) 555-0100"/>
+              </div>
+            </div>
+
+            <!-- Teammates (visible for team) -->
+            <div id="teammatesSection" class="hidden">
+              <div class="form-divider"></div>
+              <div class="form-section-label">Teammates</div>
+
+              <div class="teammate-block">
+                <div class="teammate-title">Teammate #2</div>
+                <div class="form-group">
+                  <div class="field"><label>Full Name</label><input type="text" id="t2name" placeholder="Alex Johnson"/></div>
+                  <div class="field"><label>Email</label><input type="email" id="t2email" placeholder="alex@example.com"/></div>
+                  <div class="field"><label>Phone</label><input type="tel" id="t2phone" placeholder="(610) 555-0200"/></div>
+                </div>
+              </div>
+
+              <div class="teammate-block">
+                <div class="teammate-title">Teammate #3</div>
+                <div class="form-group">
+                  <div class="field"><label>Full Name</label><input type="text" id="t3name" placeholder="Sam Lee"/></div>
+                  <div class="field"><label>Email</label><input type="email" id="t3email" placeholder="sam@example.com"/></div>
+                  <div class="field"><label>Phone</label><input type="tel" id="t3phone" placeholder="(610) 555-0300"/></div>
+                </div>
+              </div>
+
+              <div class="teammate-block">
+                <div class="teammate-title">Teammate #4</div>
+                <div class="form-group">
+                  <div class="field"><label>Full Name</label><input type="text" id="t4name" placeholder="Morgan Davis"/></div>
+                  <div class="field"><label>Email</label><input type="email" id="t4email" placeholder="morgan@example.com"/></div>
+                  <div class="field"><label>Phone</label><input type="tel" id="t4phone" placeholder="(610) 555-0400"/></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DINNER GUEST -->
+          <div id="dinnerSection" class="hidden">
+            <div class="form-section-label">Dinner Guest Information</div>
+            <div class="form-group">
+              <div class="field">
+                <label>Full Name <span class="req">*</span></label>
+                <input type="text" id="dinnerName" placeholder="Full Name"/>
+              </div>
+              <div class="field">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" id="dinnerEmail" placeholder="email@example.com"/>
+              </div>
+              <div class="field">
+                <label>Phone Number</label>
+                <input type="tel" id="dinnerPhone" placeholder="(610) 555-0000"/>
+              </div>
+              <div class="field">
+                <label>Number of Dinner Guests <span class="req">*</span></label>
+                <select id="dinnerCount" onchange="updateSummary()">
+                  <option value="1">1 guest — $40</option>
+                  <option value="2">2 guests — $80</option>
+                  <option value="3">3 guests — $120</option>
+                  <option value="4">4 guests — $160</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- SPONSORSHIP SECTION -->
+          <div id="sponsorSection" class="hidden">
+            <div class="form-divider"></div>
+            <div class="form-section-label">Sponsorship</div>
+            <div class="form-group">
+              <div class="field">
+                <label>Sponsorship Tier</label>
+                <select id="sponsorTier" onchange="updateSummary()">
+                  <option value="">— No Sponsorship —</option>
+                  <option value="gold">Gold Sponsor — $950</option>
+                  <option value="silver">Silver Sponsor — $650</option>
+                  <option value="bronze">Bronze Sponsor — $500</option>
+                  <option value="hole">Hole Sponsor — $100</option>
+                </select>
+              </div>
+            </div>
+            <div id="sponsorDetailsFields" class="hidden">
+              <div class="form-group">
+                <div class="field">
+                  <label>Company / Individual Name <span class="req">*</span></label>
+                  <input type="text" id="sponsorName" placeholder="Acme Corp or Jane Smith"/>
+                </div>
+                <div class="field">
+                  <label>Address</label>
+                  <input type="text" id="sponsorAddress" placeholder="123 Main St, Bethlehem PA"/>
+                </div>
+                <div class="field">
+                  <label>Sponsor Contact Phone</label>
+                  <input type="tel" id="sponsorPhone" placeholder="(610) 555-0000"/>
+                </div>
+                <div class="field">
+                  <label>Sponsor Contact Email</label>
+                  <input type="email" id="sponsorEmail" placeholder="contact@company.com"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ORDER SUMMARY -->
+          <div class="order-summary" id="orderSummary" style="display:none;">
+            <h4>📋 Registration Summary</h4>
+            <div id="summaryLines"></div>
+            <div class="order-total">
+              <span>Total Due</span>
+              <span id="summaryTotal">$0</span>
+            </div>
+          </div>
+
+          <!-- SUBMIT -->
+          <div class="submit-area">
+            <button class="btn-submit" id="submitBtn" onclick="handleSubmit()" disabled>
+              Complete Registration
+            </button>
+            <div class="payment-note">
+              
+              Questions? Email <a href="mailto:info@starbethlehempa.org">info@starbethlehempa.org</a>
+            </div>
+          </div>
+
+        </div><!-- /form-body -->
+      </div><!-- /mainForm -->
+    </div><!-- /form-wrapper -->
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────── -->
+<footer>
+  <strong>S.T.A.R. — Serving To Aid &amp; Restore</strong><br>
+  75 E. Market Street, Bethlehem, PA 18018 (Side door on Center Street)<br>
+  <a href="mailto:info@starbethlehempa.org">info@starbethlehempa.org</a> · <a href="https://www.starbethlehempa.org" target="_blank">starbethlehempa.org</a>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── CONFIG ────────────────────────────────────────
+  // Replace these with your actual Supabase project URL and anon key
+  const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+  const SUPABASE_KEY = 'YOUR_ANON_KEY';
+
+  const { createClient } = supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ── STATE ─────────────────────────────────────────
+  let regType = null; // 'individual' | 'team' | 'sponsor' | 'dinner'
+
+  const PRICES = {
+    golfer: 125,
+    dinner: 40,
+    sponsor: { gold: 950, silver: 650, bronze: 500, hole: 100 }
+  };
+
+  // ── REGISTRATION TYPE ─────────────────────────────
+  function selectRegType(el) {
+    document.querySelectorAll('.reg-type-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    regType = el.dataset.type;
+
+    const golferSection = document.getElementById('golferSection');
+    const teammatesSection = document.getElementById('teammatesSection');
+    const dinnerSection = document.getElementById('dinnerSection');
+    const sponsorSection = document.getElementById('sponsorSection');
+
+    golferSection.classList.add('hidden');
+    teammatesSection.classList.add('hidden');
+    dinnerSection.classList.add('hidden');
+    sponsorSection.classList.add('hidden');
+
+    if (regType === 'individual') {
+      golferSection.classList.remove('hidden');
+      sponsorSection.classList.remove('hidden');
+    } else if (regType === 'team') {
+      golferSection.classList.remove('hidden');
+      teammatesSection.classList.remove('hidden');
+      sponsorSection.classList.remove('hidden');
+    } else if (regType === 'sponsor') {
+      sponsorSection.classList.remove('hidden');
+      // Show sponsor fields directly
+      document.getElementById('sponsorTier').value = '';
+    } else if (regType === 'dinner') {
+      dinnerSection.classList.remove('hidden');
+      sponsorSection.classList.remove('hidden');
+    }
+
+    updateSummary();
+  }
+
+  // ── SPONSOR TIER CHANGE ───────────────────────────
+  document.getElementById('sponsorTier').addEventListener('change', function() {
+    const fields = document.getElementById('sponsorDetailsFields');
+    fields.classList.toggle('hidden', !this.value);
+    updateSummary();
+  });
+
+  // ── ORDER SUMMARY ─────────────────────────────────
+  function updateSummary() {
+    const summaryDiv = document.getElementById('orderSummary');
+    const linesDiv = document.getElementById('summaryLines');
+    const totalEl = document.getElementById('summaryTotal');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (!regType) {
+      summaryDiv.style.display = 'none';
+      submitBtn.disabled = true;
+      return;
+    }
+
+    let lines = [];
+    let total = 0;
+
+    if (regType === 'individual') {
+      lines.push({ label: 'Individual Golfer', amount: PRICES.golfer });
+      total += PRICES.golfer;
+    } else if (regType === 'team') {
+      lines.push({ label: 'Team of 4 Golfers (4 × $125)', amount: PRICES.golfer * 4 });
+      total += PRICES.golfer * 4;
+    } else if (regType === 'dinner') {
+      const count = parseInt(document.getElementById('dinnerCount').value) || 1;
+      lines.push({ label: `Dinner Guest${count > 1 ? 's' : ''} (${count} × $40)`, amount: count * PRICES.dinner });
+      total += count * PRICES.dinner;
+    }
+
+    const sponsorTier = document.getElementById('sponsorTier').value;
+    if (sponsorTier) {
+      const tierPrice = PRICES.sponsor[sponsorTier];
+      const tierName = { gold: 'Gold', silver: 'Silver', bronze: 'Bronze', hole: 'Hole' }[sponsorTier];
+      lines.push({ label: `${tierName} Sponsorship`, amount: tierPrice });
+      total += tierPrice;
+    }
+
+    linesDiv.innerHTML = lines.map(l =>
+      `<div class="order-line"><span>${l.label}</span><span>$${l.amount.toLocaleString()}</span></div>`
+    ).join('');
+    totalEl.textContent = '$' + total.toLocaleString();
+    summaryDiv.style.display = 'block';
+    submitBtn.disabled = total === 0;
+  }
+
+  // ── FORM SUBMISSION ───────────────────────────────
+  async function handleSubmit() {
+    const btn = document.getElementById('submitBtn');
+
+    // Basic validation
+    if (!regType) { showToast('Please select a registration type.', true); return; }
+
+    if ((regType === 'individual' || regType === 'team') && !document.getElementById('leaderName').value.trim()) {
+      showToast('Please enter the team leader name.', true); return;
+    }
+    if ((regType === 'individual' || regType === 'team') && !document.getElementById('leaderEmail').value.trim()) {
+      showToast('Please enter the team leader email.', true); return;
+    }
+    if (regType === 'dinner' && !document.getElementById('dinnerName').value.trim()) {
+      showToast('Please enter your name.', true); return;
+    }
+
+    const sponsorTier = document.getElementById('sponsorTier').value;
+    if (sponsorTier && !document.getElementById('sponsorName').value.trim()) {
+      showToast('Please enter a company/individual name for the sponsorship.', true); return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    // Build payload
+    const payload = {
+      registration_type: regType,
+      submitted_at: new Date().toISOString(),
+    };
+
+    if (regType === 'individual' || regType === 'team') {
+      payload.leader_name = document.getElementById('leaderName').value.trim();
+      payload.leader_email = document.getElementById('leaderEmail').value.trim();
+      payload.leader_phone = document.getElementById('leaderPhone').value.trim();
+    }
+
+    if (regType === 'team') {
+      payload.teammates = [
+        { name: document.getElementById('t2name').value.trim(), email: document.getElementById('t2email').value.trim(), phone: document.getElementById('t2phone').value.trim() },
+        { name: document.getElementById('t3name').value.trim(), email: document.getElementById('t3email').value.trim(), phone: document.getElementById('t3phone').value.trim() },
+        { name: document.getElementById('t4name').value.trim(), email: document.getElementById('t4email').value.trim(), phone: document.getElementById('t4phone').value.trim() },
+      ];
+    }
+
+    if (regType === 'dinner') {
+      payload.dinner_guest_name = document.getElementById('dinnerName').value.trim();
+      payload.dinner_guest_email = document.getElementById('dinnerEmail').value.trim();
+      payload.dinner_guest_phone = document.getElementById('dinnerPhone').value.trim();
+      payload.dinner_guest_count = parseInt(document.getElementById('dinnerCount').value);
+    }
+
+    if (sponsorTier) {
+      payload.sponsor_tier = sponsorTier;
+      payload.sponsor_name = document.getElementById('sponsorName').value.trim();
+      payload.sponsor_address = document.getElementById('sponsorAddress').value.trim();
+      payload.sponsor_phone = document.getElementById('sponsorPhone').value.trim();
+      payload.sponsor_email = document.getElementById('sponsorEmail').value.trim();
+    }
+
+    // Calculate total
+    let total = 0;
+    if (regType === 'individual') total += 125;
+    if (regType === 'team') total += 500;
+    if (regType === 'dinner') total += parseInt(document.getElementById('dinnerCount').value) * 40;
+    if (sponsorTier) total += PRICES.sponsor[sponsorTier];
+    payload.total_amount = total;
+
+    try {
+      const { error } = await db.from('golf_registrations').insert([payload]);
+      if (error) throw error;
+
+      document.getElementById('mainForm').style.display = 'none';
+      document.getElementById('successOverlay').classList.add('show');
+      document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
+    } catch (err) {
+      console.error(err);
+      showToast('There was an error submitting. Please try again or email us directly.', true);
+      btn.disabled = false;
+      btn.textContent = 'Complete Registration';
+    }
+  }
+
+  // ── TOAST ─────────────────────────────────────────
+  function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (isError ? ' error' : '');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3800);
+  }
+</script>
+</body>
+</html>
