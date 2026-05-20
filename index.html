@@ -766,12 +766,16 @@
       <div class="success-overlay" id="successOverlay">
         <div class="success-icon">⛳</div>
         <h3>You're Registered!</h3>
-        <p>Thank you for supporting S.T.A.R. Golf Classic 2026. You'll be redirected to complete your payment in <strong id="countdown">3</strong> seconds...</p>
-        <div id="confirmationSummary" style="margin-top:20px;text-align:left;background:rgba(255,255,255,0.07);border-radius:10px;padding:18px 22px;"></div>
-        <button onclick="window.location.href='https://donorbox.org/star-golf-fundraiser-2026'" style="margin-top:24px;background:var(--gold);border:none;color:var(--green-dark);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:700;padding:12px 28px;border-radius:8px;cursor:pointer;letter-spacing:0.04em;">
-          Pay Now →
-        </button>
-        <button onclick="resetForm()" style="margin-top:10px;background:transparent;border:2px solid rgba(255,255,255,0.3);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;padding:12px 28px;border-radius:8px;cursor:pointer;letter-spacing:0.04em;">
+        <p>Thank you for supporting S.T.A.R. Golf Classic 2026. Please complete your payment below.</p>
+        <div id="confirmationSummary" style="margin-top:20px;text-align:left;background:rgba(255,255,255,0.07);border-radius:10px;padding:18px 22px;margin-bottom:24px;"></div>
+
+        <!-- Donorbox Embed -->
+        <div style="background:#fff;border-radius:10px;overflow:hidden;width:100%;max-width:600px;margin:0 auto;">
+          <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
+          <iframe id="donorboxIframe" src="https://donorbox.org/embed/star-golf-fundraiser-2026" name="donorbox" allowpaymentrequest="allowpaymentrequest" seamless="seamless" frameborder="0" scrolling="no" height="900" width="100%" style="max-width:500px;min-width:250px;max-height:none!important;display:block;margin:0 auto;"></iframe>
+        </div>
+
+        <button onclick="resetForm()" style="margin-top:24px;background:transparent;border:2px solid rgba(255,255,255,0.3);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;padding:12px 28px;border-radius:8px;cursor:pointer;letter-spacing:0.04em;">
           Fill out another form
         </button>
       </div>
@@ -1196,18 +1200,6 @@
       document.getElementById('mainForm').style.display = 'none';
       document.getElementById('successOverlay').classList.add('show');
       document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
-
-      // Countdown and redirect to Donorbox
-      let count = 3;
-      const countdownEl = document.getElementById('countdown');
-      const countInterval = setInterval(() => {
-        count--;
-        if (countdownEl) countdownEl.textContent = count;
-        if (count <= 0) {
-          clearInterval(countInterval);
-          window.location.href = `https://donorbox.org/star-golf-fundraiser-2026?amount=${total}`;
-        }
-      }, 1000);
     } catch (err) {
       console.error(err);
       showToast('There was an error submitting. Please try again or email us directly.', true);
