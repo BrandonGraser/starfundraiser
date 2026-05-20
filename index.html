@@ -760,22 +760,17 @@
 <!-- ─── REGISTRATION FORM ──────────────────────────── -->
 <section class="form-section" id="register">
   <div class="container">
-    <div class="section-eyebrow">Registration</div>
-    <div class="section-title">Reserve Your Spot</div>
-    <div class="section-lead">
-      Fill out the form below to register as a golfer, team, sponsor, or dinner guest. Payment instructions are provided upon submission.
-    </div>
-
     <div class="form-wrapper" id="formWrapper">
 
       <!-- SUCCESS -->
       <div class="success-overlay" id="successOverlay">
         <div class="success-icon">⛳</div>
         <h3>You're Registered!</h3>
-        <p>
-          Thank you for supporting S.T.A.R. Golf Classic 2026.<br><br>
-          You'll receive a confirmation email shortly. Payment can be made by check payable to <strong>S.T.A.R. Serving to Aid and Restore</strong> mailed to 75 E. Market Street, Bethlehem PA 18018, or via <strong>Venmo @S.T.A.R.S.T.A.R.@starbethlehempa</strong>.
-        </p>
+        <p>Thank you for supporting S.T.A.R. Golf Classic 2026.</p>
+        <div id="confirmationSummary" style="margin-top:20px;text-align:left;background:rgba(255,255,255,0.07);border-radius:10px;padding:18px 22px;"></div>
+        <button onclick="resetForm()" style="margin-top:24px;background:transparent;border:2px solid rgba(255,255,255,0.3);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;padding:12px 28px;border-radius:8px;cursor:pointer;letter-spacing:0.04em;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
+          ← Back to Home
+        </button>
       </div>
 
       <!-- FORM -->
@@ -1146,6 +1141,54 @@
       const { error } = await db.from('golf_registrations').insert([payload]);
       if (error) throw error;
 
+      // Build confirmation summary
+      const typeLabels = { individual: 'Individual Golfer', team: 'Team (Foursome)', sponsor: 'Sponsor Only', dinner: 'Dinner Guest' };
+      const sponsorLabels = { gold: 'Gold Sponsor — $950', silver: 'Silver Sponsor — $650', bronze: 'Bronze Sponsor — $500', hole: 'Hole Sponsor — $100' };
+      const dinnerCount = regType === 'dinner' ? parseInt(document.getElementById('dinnerCount').value) : 0;
+
+      let summaryHTML = `<div style="font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:12px;">Registration Summary</div>`;
+
+      summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
+        <span>Registration Type</span><span style="color:var(--gold-light);font-weight:600;">${typeLabels[regType]}</span>
+      </div>`;
+
+      if (regType === 'individual' || regType === 'team') {
+        const name = document.getElementById('leaderName').value.trim();
+        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
+          <span>Name</span><span style="color:var(--gold-light);font-weight:600;">${name}</span>
+        </div>`;
+        const price = regType === 'team' ? '$500 (4 × $125)' : '$125';
+        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
+          <span>Golf Entry</span><span style="color:var(--gold-light);font-weight:600;">${price}</span>
+        </div>`;
+      }
+
+      if (regType === 'dinner') {
+        const name = document.getElementById('dinnerName').value.trim();
+        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
+          <span>Name</span><span style="color:var(--gold-light);font-weight:600;">${name}</span>
+        </div>`;
+        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
+          <span>Dinner Guests</span><span style="color:var(--gold-light);font-weight:600;">${dinnerCount} × $40 = $${dinnerCount * 40}</span>
+        </div>`;
+      }
+
+      if (sponsorTier) {
+        const sName = document.getElementById('sponsorName').value.trim();
+        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
+          <span>Sponsorship</span><span style="color:var(--gold-light);font-weight:600;">${sponsorLabels[sponsorTier]}</span>
+        </div>`;
+        if (sName) summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
+          <span>Sponsor Name</span><span style="color:var(--gold-light);font-weight:600;">${sName}</span>
+        </div>`;
+      }
+
+      summaryHTML += `<div style="display:flex;justify-content:space-between;padding:12px 0 0;font-size:1rem;font-weight:700;color:var(--gold-light);">
+        <span>Total</span><span>$${total.toLocaleString()}</span>
+      </div>`;
+
+      document.getElementById('confirmationSummary').innerHTML = summaryHTML;
+
       document.getElementById('mainForm').style.display = 'none';
       document.getElementById('successOverlay').classList.add('show');
       document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
@@ -1155,6 +1198,28 @@
       btn.disabled = false;
       btn.textContent = 'Complete Registration';
     }
+  }
+
+  // ── RESET / BACK TO HOME ──────────────────────────
+  function resetForm() {
+    document.getElementById('successOverlay').classList.remove('show');
+    document.getElementById('mainForm').style.display = 'block';
+    document.getElementById('confirmationSummary').innerHTML = '';
+
+    // Reset all inputs
+    document.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
+    document.querySelectorAll('.reg-type-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('golferSection').classList.add('hidden');
+    document.getElementById('teammatesSection').classList.add('hidden');
+    document.getElementById('dinnerSection').classList.add('hidden');
+    document.getElementById('sponsorSection').classList.add('hidden');
+    document.getElementById('sponsorDetailsFields').classList.add('hidden');
+    document.getElementById('orderSummary').style.display = 'none';
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').textContent = 'Complete Registration';
+    regType = null;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ── TOAST ─────────────────────────────────────────
