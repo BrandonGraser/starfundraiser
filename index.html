@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>S.T.A.R. Golf Classic 2026</title>
+  <title>S.T.A.R. Designer Purse Bingo &amp; Tricky Tray 2025</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
-      --green-dark: #1a3d2b;
-      --green-mid: #2d6a4f;
-      --green-light: #52b788;
+      --blue-dark: #142d52;
+      --blue-mid: #1f5a9e;
+      --blue-light: #5b9bd5;
       --gold: #d4a017;
       --gold-light: #f0c040;
-      --cream: #faf6ef;
-      --warm-white: #fffdf8;
+      --cream: #f4f7fb;
+      --warm-white: #fafcff;
       --charcoal: #1c1c1c;
       --text-mid: #3d3d3d;
       --text-light: #6b6b6b;
-      --silver: #7a8fa6;
-      --bronze: #a0673a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,10 +32,10 @@
     /* ─── HERO ─────────────────────────────────── */
     .hero {
       position: relative;
-      background: var(--green-dark);
-      background-image: url('images/hero-bg.jpg');
+      background: var(--blue-dark);
+      background-image: url('images/bingo-hero.jpg');
       background-size: cover;
-      background-position: center 30%;
+      background-position: center;
       background-repeat: no-repeat;
       display: flex;
       flex-direction: column;
@@ -52,7 +50,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(15, 40, 25, 0.72);
+      background: rgba(10, 22, 45, 0.78);
       pointer-events: none;
     }
 
@@ -73,7 +71,7 @@
     .hero-badge {
       display: inline-block;
       background: var(--gold);
-      color: var(--green-dark);
+      color: var(--blue-dark);
       font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.18em;
@@ -204,7 +202,7 @@
       font-size: 0.85rem;
       font-weight: 600;
       letter-spacing: 0.06em;
-      color: var(--green-dark);
+      color: var(--blue-dark);
       text-transform: uppercase;
     }
 
@@ -222,7 +220,7 @@
       font-size: 0.72rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--green-mid);
+      color: var(--blue-mid);
       font-weight: 600;
       margin-bottom: 10px;
     }
@@ -231,7 +229,7 @@
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.8rem, 4vw, 2.8rem);
       font-weight: 700;
-      color: var(--green-dark);
+      color: var(--blue-dark);
       margin-bottom: 16px;
     }
 
@@ -242,102 +240,64 @@
       max-width: 600px;
     }
 
-    /* ─── SPONSORSHIP ───────────────────────────── */
-    .sponsor-section {
-      background: var(--green-dark);
+    /* ─── EVENT HIGHLIGHTS ──────────────────────── */
+    .highlights-section {
+      background: var(--blue-dark);
     }
 
-    .sponsor-section .section-eyebrow { color: var(--gold-light); }
-    .sponsor-section .section-title { color: #fff; }
-    .sponsor-section .section-lead { color: rgba(255,255,255,0.65); }
+    .highlights-section .section-title { color: #fff; }
+    .highlights-section .section-lead { color: rgba(255,255,255,0.65); }
 
-    .sponsor-grid {
+    .highlight-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       margin-top: 40px;
     }
 
-    .sponsor-card {
+    .highlight-card {
       border-radius: 10px;
       padding: 28px 22px;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: 2px solid transparent;
+      text-align: center;
     }
 
-    .sponsor-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
-    }
-
-    .sponsor-card.selected {
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.4), 0 12px 36px rgba(0,0,0,0.3);
-    }
-
-    .sponsor-card.gold-tier {
+    .highlight-card.gold-card {
       background: linear-gradient(135deg, #d4a017 0%, #f0c040 100%);
-      color: var(--green-dark);
+      color: var(--blue-dark);
     }
 
-    .sponsor-card.silver-tier {
-      background: linear-gradient(135deg, #6b7f96 0%, #9bafc2 100%);
+    .highlight-card.teal-card {
+      background: linear-gradient(135deg, var(--blue-mid) 0%, #3a7bc8 100%);
       color: #fff;
     }
 
-    .sponsor-card.bronze-tier {
-      background: linear-gradient(135deg, #8b5a2b 0%, #c47c3e 100%);
-      color: #fff;
-    }
-
-    .sponsor-card.hole-tier {
-      background: linear-gradient(135deg, var(--green-mid) 0%, #40916c 100%);
-      color: #fff;
-    }
-
-    .sponsor-card.dinner-tier {
+    .highlight-card.outline-card {
       background: rgba(255,255,255,0.06);
       border: 2px solid rgba(255,255,255,0.15);
       color: rgba(255,255,255,0.9);
     }
 
-    .sponsor-tier-name {
+    .highlight-icon { font-size: 2rem; margin-bottom: 10px; }
+
+    .highlight-name {
       font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
-    .sponsor-price {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .sponsor-perks {
-      font-size: 0.8rem;
+    .highlight-desc {
+      font-size: 0.82rem;
       opacity: 0.85;
       line-height: 1.7;
     }
 
-    .sponsor-check {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 24px;
-      height: 24px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      opacity: 0;
-      transition: opacity 0.2s;
+    .highlights-footnote {
+      margin-top: 32px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.04em;
     }
-
-    .sponsor-card.selected .sponsor-check { opacity: 1; }
 
     /* ─── REGISTRATION FORM ─────────────────────── */
     .form-section {
@@ -354,7 +314,7 @@
     }
 
     .form-header {
-      background: var(--green-dark);
+      background: var(--blue-dark);
       padding: 28px 36px;
       display: flex;
       align-items: center;
@@ -393,7 +353,7 @@
       font-size: 0.72rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--green-mid);
+      color: var(--blue-mid);
       font-weight: 700;
       margin-bottom: 16px;
       padding-bottom: 10px;
@@ -432,7 +392,7 @@
     input, select, textarea {
       width: 100%;
       padding: 11px 14px;
-      border: 1.5px solid #e0ddd8;
+      border: 1.5px solid #d7dfeb;
       border-radius: 8px;
       font-family: 'DM Sans', sans-serif;
       font-size: 0.9rem;
@@ -443,28 +403,12 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: var(--green-mid);
-      box-shadow: 0 0 0 3px rgba(45,106,79,0.12);
+      border-color: var(--blue-mid);
+      box-shadow: 0 0 0 3px rgba(31,90,158,0.12);
       background: #fff;
     }
 
     textarea { resize: vertical; min-height: 80px; }
-
-    .teammate-block {
-      background: var(--cream);
-      border: 1px solid rgba(0,0,0,0.07);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 14px;
-    }
-
-    .teammate-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--green-dark);
-      margin-bottom: 14px;
-      letter-spacing: 0.06em;
-    }
 
     .form-divider {
       height: 1px;
@@ -472,40 +416,41 @@
       margin: 28px 0;
     }
 
-    /* Registration type selector */
-    .reg-type-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    /* Price compare banner */
+    .price-banner {
+      display: flex;
+      flex-wrap: wrap;
       gap: 12px;
       margin-bottom: 28px;
     }
 
-    .reg-type-btn {
-      border: 2px solid #e0ddd8;
+    .price-box {
+      flex: 1 1 180px;
+      border: 2px solid #d7dfeb;
       border-radius: 10px;
       padding: 16px 12px;
       text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
       background: var(--cream);
     }
 
-    .reg-type-btn:hover {
-      border-color: var(--green-mid);
+    .price-box.featured {
+      border-color: var(--blue-mid);
+      background: rgba(31,90,158,0.07);
     }
 
-    .reg-type-btn.active {
-      border-color: var(--green-mid);
-      background: rgba(45,106,79,0.07);
+    .price-box .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--blue-dark);
     }
 
-    .reg-type-btn .type-icon { font-size: 1.5rem; margin-bottom: 6px; }
-    .reg-type-btn .type-name { font-size: 0.82rem; font-weight: 700; color: var(--green-dark); }
-    .reg-type-btn .type-price { font-size: 0.75rem; color: var(--text-light); margin-top: 2px; }
+    .price-box .price-label { font-size: 0.8rem; font-weight: 700; color: var(--blue-dark); margin-top: 4px; }
+    .price-box .price-sub { font-size: 0.72rem; color: var(--text-light); margin-top: 2px; }
 
     /* Selection summary */
     .order-summary {
-      background: var(--green-dark);
+      background: var(--blue-dark);
       border-radius: 10px;
       padding: 20px 24px;
       margin-top: 24px;
@@ -550,7 +495,7 @@
       display: block;
       width: 100%;
       padding: 17px 24px;
-      background: var(--green-mid);
+      background: var(--blue-mid);
       color: #fff;
       font-family: 'DM Sans', sans-serif;
       font-size: 1rem;
@@ -563,9 +508,9 @@
     }
 
     .btn-submit:hover {
-      background: var(--green-dark);
+      background: var(--blue-dark);
       transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(26,61,43,0.3);
+      box-shadow: 0 8px 24px rgba(20,45,82,0.3);
     }
 
     .btn-submit:active { transform: translateY(0); }
@@ -584,12 +529,12 @@
       line-height: 1.6;
     }
 
-    .payment-note a { color: var(--green-mid); }
+    .payment-note a { color: var(--blue-mid); }
 
     /* ─── SUCCESS STATE ─────────────────────────── */
     .success-overlay {
       display: none;
-      background: rgba(26,61,43,0.97);
+      background: rgba(20,45,82,0.97);
       border-radius: 16px;
       padding: 60px 36px;
       text-align: center;
@@ -623,6 +568,20 @@
       font-size: 0.95rem;
     }
 
+    .venmo-box {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px auto 0;
+      max-width: 500px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+    }
+
+    .venmo-box strong { color: var(--gold-light); }
+
     /* ─── FOOTER ────────────────────────────────── */
     footer {
       background: var(--charcoal);
@@ -641,7 +600,7 @@
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: var(--green-dark);
+      background: var(--blue-dark);
       color: #fff;
       padding: 14px 22px;
       border-radius: 10px;
@@ -678,7 +637,7 @@
 </div>
 
 <section class="hero">
-  <div class="hero-badge">Annual Fundraiser · 2026</div>
+  <div class="hero-badge">Fundraiser Event · 2025</div>
 
   <div class="star-logo-svg" style="position:relative;z-index:2;width:160px;margin-bottom:8px;">
     <img src="images/STARLogo.svg" alt="S.T.A.R. Logo" width="160" height="90" />
@@ -688,71 +647,71 @@
 
   <div class="hero-divider"></div>
 
-  <div class="event-title">Golf Classic 2026</div>
-  <div class="event-location">Green Pond Country Club &nbsp;·&nbsp; 3604 Farmersville Rd, Bethlehem, PA 18020</div>
+  <div class="event-title">Designer Purse Bingo<br>&amp; Tricky Tray</div>
+  <div class="event-location">American Club of Coplay &nbsp;·&nbsp; 300 Cherry St, Coplay, PA 18037</div>
 
   <div class="hero-stats">
     <div class="stat-item">
       <div class="stat-label">Date</div>
-      <div class="stat-value">Sun, June 28<br>2026</div>
+      <div class="stat-value">Sat, Sept 20<br>2025</div>
     </div>
     <div class="stat-item">
-      <div class="stat-label">Registration</div>
+      <div class="stat-label">Doors Open</div>
       <div class="stat-value">12:00 PM</div>
     </div>
     <div class="stat-item">
-      <div class="stat-label">Shotgun Start</div>
-      <div class="stat-value gold">1:30 PM Sharp</div>
+      <div class="stat-label">Games Start</div>
+      <div class="stat-value gold">1:00 PM</div>
     </div>
     <div class="stat-item">
-      <div class="stat-label">Entry Fee</div>
-      <div class="stat-value gold">$125 / golfer</div>
+      <div class="stat-label">Pre-Registration</div>
+      <div class="stat-value gold">$25 / person</div>
     </div>
     <div class="stat-item">
-      <div class="stat-label">Deadline</div>
-      <div class="stat-value">June 10, 2026</div>
+      <div class="stat-label">At the Door</div>
+      <div class="stat-value">$30 / person</div>
     </div>
   </div>
 
   <div class="scroll-cta">
-    Register Below
+    Pre-Register Below
     <div class="scroll-arrow"></div>
   </div>
 </section>
 
-<!-- ─── SPONSORSHIP ────────────────────────────────── -->
-<section class="sponsor-section">
+<!-- ─── EVENT HIGHLIGHTS ───────────────────────────── -->
+<section class="highlights-section">
   <div class="container" style="text-align:center;">
-    <div class="section-title">Make a Bigger Impact</div>
+    <div class="section-title">An Afternoon of Prizes &amp; Fun</div>
     <div class="section-lead" style="margin:0 auto;">
-      Sponsoring the Golf Classic puts your company or name front-and-center while directly funding outreach to our most vulnerable neighbors. Select a tier in the registration form below.
+      Join us for an afternoon of bingo, raffles, and giving back. Every ticket directly funds outreach to our most vulnerable neighbors in the Lehigh Valley.
     </div>
 
-    <div class="sponsor-grid">
-      <div class="sponsor-card gold-tier">
-        <div class="sponsor-check">✓</div>
-        <div class="sponsor-tier-name">Gold Sponsor</div>
-        <div class="sponsor-price">$950</div>
-        <div class="sponsor-perks">Whole page ad in program<br>1 Foursome included<br>Signage at event</div>
+    <div class="highlight-grid">
+      <div class="highlight-card gold-card">
+        <div class="highlight-icon">👜</div>
+        <div class="highlight-name">Designer Purse Bingo</div>
+        <div class="highlight-desc">Play bingo to win designer purses — games start at 1:00 PM sharp</div>
       </div>
-      <div class="sponsor-card silver-tier">
-        <div class="sponsor-check">✓</div>
-        <div class="sponsor-tier-name">Silver Sponsor</div>
-        <div class="sponsor-price">$650</div>
-        <div class="sponsor-perks">½ page ad in program<br>1 Twosome included<br>Signage at event</div>
+      <div class="highlight-card teal-card">
+        <div class="highlight-icon">🎟️</div>
+        <div class="highlight-name">Tricky Tray</div>
+        <div class="highlight-desc">Drop your tickets for a chance at fantastic prize baskets</div>
       </div>
-      <div class="sponsor-card bronze-tier">
-        <div class="sponsor-check">✓</div>
-        <div class="sponsor-tier-name">Bronze Sponsor</div>
-        <div class="sponsor-price">$500</div>
-        <div class="sponsor-perks">3.5×2" ad in program<br>1 Twosome included<br>Signage at event</div>
+      <div class="highlight-card teal-card">
+        <div class="highlight-icon">💵</div>
+        <div class="highlight-name">50/50 Raffle</div>
+        <div class="highlight-desc">Half the pot goes home with one lucky winner</div>
       </div>
-      <div class="sponsor-card hole-tier">
-        <div class="sponsor-check">✓</div>
-        <div class="sponsor-tier-name">Hole Sponsor</div>
-        <div class="sponsor-price">$100</div>
-        <div class="sponsor-perks">Signage at a hole<br>Recognition in program</div>
+      <div class="highlight-card outline-card">
+        <div class="highlight-icon">🧴</div>
+        <div class="highlight-name">Toiletries Drive</div>
+        <div class="highlight-desc">Bring a donation of toiletries to be entered in a special raffle prize!</div>
       </div>
+    </div>
+
+    <div class="highlights-footnote">
+      Food available for purchase &nbsp;·&nbsp; No advance seat reservations
     </div>
   </div>
 </section>
@@ -764,15 +723,19 @@
 
       <!-- SUCCESS -->
       <div class="success-overlay" id="successOverlay">
-        <div class="success-icon">⛳</div>
-        <h3>You're Registered!</h3>
-        <p>Thank you for supporting S.T.A.R. Golf Classic 2026. Please complete your payment below.</p>
+        <div class="success-icon">🎉</div>
+        <h3>You're Pre-Registered!</h3>
+        <p>Thank you for supporting S.T.A.R. Designer Purse Bingo &amp; Tricky Tray. Please complete your payment below to lock in the $25 pre-registration rate.</p>
         <div id="confirmationSummary" style="margin-top:20px;text-align:left;background:rgba(255,255,255,0.07);border-radius:10px;padding:18px 22px;margin-bottom:24px;"></div>
 
         <!-- Donorbox Embed -->
         <div style="background:#fff;border-radius:10px;overflow:hidden;width:100%;max-width:600px;margin:0 auto;">
           <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
-          <iframe id="donorboxIframe" src="https://donorbox.org/embed/star-golf-fundraiser-2026" name="donorbox" allowpaymentrequest="allowpaymentrequest" seamless="seamless" frameborder="0" scrolling="no" height="900" width="100%" style="max-width:500px;min-width:250px;max-height:none!important;display:block;margin:0 auto;"></iframe>
+          <iframe id="donorboxIframe" src="https://donorbox.org/embed/star-purse-bingo-2025" name="donorbox" allowpaymentrequest="allowpaymentrequest" seamless="seamless" frameborder="0" scrolling="no" height="900" width="100%" style="max-width:500px;min-width:250px;max-height:none!important;display:block;margin:0 auto;"></iframe>
+        </div>
+
+        <div class="venmo-box">
+          Prefer Venmo? Send your total to <strong>@starbethlehem</strong> and include your name and &ldquo;Purse Bingo&rdquo; in the note.
         </div>
 
         <button onclick="resetForm()" style="margin-top:24px;background:transparent;border:2px solid rgba(255,255,255,0.3);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;padding:12px 28px;border-radius:8px;cursor:pointer;letter-spacing:0.04em;">
@@ -785,173 +748,91 @@
         <div class="form-header">
           <div class="form-header-icon">📋</div>
           <div class="form-header-text">
-            <h3>Golf Classic Registration Form</h3>
-            <p>All fields marked with * are required</p>
+            <h3>Bingo Pre-Registration Form</h3>
+            <p>Pre-register for $25 per person — tickets are $30 at the door</p>
           </div>
         </div>
 
         <div class="form-body">
 
-          <!-- REGISTRATION TYPE -->
-          <div class="form-section-label">What are you registering for?</div>
-          <div class="reg-type-grid" id="regTypeGrid">
-            <div class="reg-type-btn" data-type="individual" onclick="selectRegType(this)">
-              <div class="type-icon">🏌️</div>
-              <div class="type-name">Individual Golfer</div>
-              <div class="type-price">$125 / person</div>
+          <!-- PRICE BANNER -->
+          <div class="price-banner">
+            <div class="price-box featured">
+              <div class="price-amount">$25</div>
+              <div class="price-label">Pre-Registration</div>
+              <div class="price-sub">Per person, online today</div>
             </div>
-            <div class="reg-type-btn" data-type="team" onclick="selectRegType(this)">
-              <div class="type-icon">👥</div>
-              <div class="type-name">Team (Foursome)</div>
-              <div class="type-price">$125 × 4</div>
-            </div>
-            <div class="reg-type-btn" data-type="sponsor" onclick="selectRegType(this)">
-              <div class="type-icon">🏆</div>
-              <div class="type-name">Sponsor Only</div>
-              <div class="type-price">No golf</div>
-            </div>
-            <div class="reg-type-btn" data-type="dinner" onclick="selectRegType(this)">
-              <div class="type-icon">🍽️</div>
-              <div class="type-name">Dinner Guest</div>
-              <div class="type-price">$40 / person</div>
+            <div class="price-box">
+              <div class="price-amount">$30</div>
+              <div class="price-label">At the Door</div>
+              <div class="price-sub">Per person, day of event</div>
             </div>
           </div>
 
-          <!-- GOLFER SECTION -->
-          <div id="golferSection" class="hidden">
-            <div class="form-section-label">Team Leader / Individual Golfer</div>
-            <div class="form-group">
-              <div class="field">
-                <label>Full Name <span class="req">*</span></label>
-                <input type="text" id="leaderName" placeholder="Jane Smith"/>
-              </div>
-              <div class="field">
-                <label>Email Address <span class="req">*</span></label>
-                <input type="email" id="leaderEmail" placeholder="jane@example.com"/>
-              </div>
-              <div class="field">
-                <label>Phone Number <span class="req">*</span></label>
-                <input type="tel" id="leaderPhone" placeholder="(610) 555-0100"/>
-              </div>
+          <!-- CONTACT INFO -->
+          <div class="form-section-label">Your Information</div>
+          <div class="form-group">
+            <div class="field">
+              <label>Full Name <span class="req">*</span></label>
+              <input type="text" id="regName" placeholder="Jane Smith"/>
             </div>
-
-            <!-- Teammates (visible for team) -->
-            <div id="teammatesSection" class="hidden">
-              <div class="form-divider"></div>
-              <div class="form-section-label">Teammates</div>
-
-              <div class="teammate-block">
-                <div class="teammate-title">Teammate #2</div>
-                <div class="form-group">
-                  <div class="field"><label>Full Name</label><input type="text" id="t2name" placeholder="Alex Johnson"/></div>
-                  <div class="field"><label>Email</label><input type="email" id="t2email" placeholder="alex@example.com"/></div>
-                  <div class="field"><label>Phone</label><input type="tel" id="t2phone" placeholder="(610) 555-0200"/></div>
-                </div>
-              </div>
-
-              <div class="teammate-block">
-                <div class="teammate-title">Teammate #3</div>
-                <div class="form-group">
-                  <div class="field"><label>Full Name</label><input type="text" id="t3name" placeholder="Sam Lee"/></div>
-                  <div class="field"><label>Email</label><input type="email" id="t3email" placeholder="sam@example.com"/></div>
-                  <div class="field"><label>Phone</label><input type="tel" id="t3phone" placeholder="(610) 555-0300"/></div>
-                </div>
-              </div>
-
-              <div class="teammate-block">
-                <div class="teammate-title">Teammate #4</div>
-                <div class="form-group">
-                  <div class="field"><label>Full Name</label><input type="text" id="t4name" placeholder="Morgan Davis"/></div>
-                  <div class="field"><label>Email</label><input type="email" id="t4email" placeholder="morgan@example.com"/></div>
-                  <div class="field"><label>Phone</label><input type="tel" id="t4phone" placeholder="(610) 555-0400"/></div>
-                </div>
-              </div>
+            <div class="field">
+              <label>Email Address <span class="req">*</span></label>
+              <input type="email" id="regEmail" placeholder="jane@example.com"/>
+            </div>
+            <div class="field">
+              <label>Phone Number <span class="req">*</span></label>
+              <input type="tel" id="regPhone" placeholder="(610) 555-0100"/>
             </div>
           </div>
 
-          <!-- DINNER GUEST -->
-          <div id="dinnerSection" class="hidden">
-            <div class="form-section-label">Dinner Guest Information</div>
-            <div class="form-group">
-              <div class="field">
-                <label>Full Name <span class="req">*</span></label>
-                <input type="text" id="dinnerName" placeholder="Full Name"/>
-              </div>
-              <div class="field">
-                <label>Email Address <span class="req">*</span></label>
-                <input type="email" id="dinnerEmail" placeholder="email@example.com"/>
-              </div>
-              <div class="field">
-                <label>Phone Number</label>
-                <input type="tel" id="dinnerPhone" placeholder="(610) 555-0000"/>
-              </div>
-              <div class="field">
-                <label>Number of Dinner Guests <span class="req">*</span></label>
-                <select id="dinnerCount" onchange="updateSummary()">
-                  <option value="1">1 guest — $40</option>
-                  <option value="2">2 guests — $80</option>
-                  <option value="3">3 guests — $120</option>
-                  <option value="4">4 guests — $160</option>
-                </select>
-              </div>
+          <div class="form-divider"></div>
+
+          <!-- TICKETS -->
+          <div class="form-section-label">Tickets</div>
+          <div class="form-group">
+            <div class="field">
+              <label>Number of Attendees <span class="req">*</span></label>
+              <select id="ticketCount" onchange="updateSummary()">
+                <option value="1">1 person — $25</option>
+                <option value="2">2 people — $50</option>
+                <option value="3">3 people — $75</option>
+                <option value="4">4 people — $100</option>
+                <option value="5">5 people — $125</option>
+                <option value="6">6 people — $150</option>
+                <option value="7">7 people — $175</option>
+                <option value="8">8 people — $200</option>
+                <option value="9">9 people — $225</option>
+                <option value="10">10 people — $250</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label>Names of Additional Attendees <span style="font-weight:400;color:var(--text-light);">(optional)</span></label>
+              <textarea id="guestNames" placeholder="List the names of the other people in your group"></textarea>
             </div>
           </div>
 
-          <!-- SPONSORSHIP SECTION -->
-          <div id="sponsorSection" class="hidden">
-            <div class="form-divider"></div>
-            <div class="form-section-label">Sponsorship</div>
-            <div class="form-group">
-              <div class="field">
-                <label>Sponsorship Tier</label>
-                <select id="sponsorTier" onchange="updateSummary()">
-                  <option value="">— No Sponsorship —</option>
-                  <option value="gold">Gold Sponsor — $950</option>
-                  <option value="silver">Silver Sponsor — $650</option>
-                  <option value="bronze">Bronze Sponsor — $500</option>
-                  <option value="hole">Hole Sponsor — $100</option>
-                </select>
-              </div>
-            </div>
-            <div id="sponsorDetailsFields" class="hidden">
-              <div class="form-group">
-                <div class="field">
-                  <label>Company / Individual Name <span class="req">*</span></label>
-                  <input type="text" id="sponsorName" placeholder="Acme Corp or Jane Smith"/>
-                </div>
-                <div class="field">
-                  <label>Address</label>
-                  <input type="text" id="sponsorAddress" placeholder="123 Main St, Bethlehem PA"/>
-                </div>
-                <div class="field">
-                  <label>Sponsor Contact Phone</label>
-                  <input type="tel" id="sponsorPhone" placeholder="(610) 555-0000"/>
-                </div>
-                <div class="field">
-                  <label>Sponsor Contact Email</label>
-                  <input type="email" id="sponsorEmail" placeholder="contact@company.com"/>
-                </div>
-              </div>
-            </div>
+          <div class="payment-note" style="text-align:left;margin-top:4px;">
+            Please note: seating is open — there are no advance seat reservations. Don't forget to bring a donation of toiletries to be entered in a special raffle prize!
           </div>
 
           <!-- ORDER SUMMARY -->
-          <div class="order-summary" id="orderSummary" style="display:none;">
+          <div class="order-summary" id="orderSummary">
             <h4>📋 Registration Summary</h4>
             <div id="summaryLines"></div>
             <div class="order-total">
               <span>Total Due</span>
-              <span id="summaryTotal">$0</span>
+              <span id="summaryTotal">$25</span>
             </div>
           </div>
 
           <!-- SUBMIT -->
           <div class="submit-area">
-            <button class="btn-submit" id="submitBtn" onclick="handleSubmit()" disabled>
-              Complete Registration
+            <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
+              Complete Pre-Registration
             </button>
             <div class="payment-note">
-              
+              Payment is collected after registration via card or Venmo (@starbethlehem).<br>
               Questions? Email <a href="mailto:info@starbethlehempa.org">info@starbethlehempa.org</a>
             </div>
           </div>
@@ -981,215 +862,62 @@
   const { createClient } = supabase;
   const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // ── STATE ─────────────────────────────────────────
-  let regType = null; // 'individual' | 'team' | 'sponsor' | 'dinner'
-
-  const PRICES = {
-    golfer: 125,
-    dinner: 40,
-    sponsor: { gold: 950, silver: 650, bronze: 500, hole: 100 }
-  };
-
-  // ── REGISTRATION TYPE ─────────────────────────────
-  function selectRegType(el) {
-    document.querySelectorAll('.reg-type-btn').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    regType = el.dataset.type;
-
-    const golferSection = document.getElementById('golferSection');
-    const teammatesSection = document.getElementById('teammatesSection');
-    const dinnerSection = document.getElementById('dinnerSection');
-    const sponsorSection = document.getElementById('sponsorSection');
-
-    golferSection.classList.add('hidden');
-    teammatesSection.classList.add('hidden');
-    dinnerSection.classList.add('hidden');
-    sponsorSection.classList.add('hidden');
-
-    if (regType === 'individual') {
-      golferSection.classList.remove('hidden');
-      sponsorSection.classList.remove('hidden');
-    } else if (regType === 'team') {
-      golferSection.classList.remove('hidden');
-      teammatesSection.classList.remove('hidden');
-      sponsorSection.classList.remove('hidden');
-    } else if (regType === 'sponsor') {
-      sponsorSection.classList.remove('hidden');
-      // Show sponsor fields directly
-      document.getElementById('sponsorTier').value = '';
-    } else if (regType === 'dinner') {
-      dinnerSection.classList.remove('hidden');
-      sponsorSection.classList.remove('hidden');
-    }
-
-    updateSummary();
-  }
-
-  // ── SPONSOR TIER CHANGE ───────────────────────────
-  document.getElementById('sponsorTier').addEventListener('change', function() {
-    const fields = document.getElementById('sponsorDetailsFields');
-    fields.classList.toggle('hidden', !this.value);
-    updateSummary();
-  });
+  const TICKET_PRICE = 25;
 
   // ── ORDER SUMMARY ─────────────────────────────────
   function updateSummary() {
-    const summaryDiv = document.getElementById('orderSummary');
-    const linesDiv = document.getElementById('summaryLines');
-    const totalEl = document.getElementById('summaryTotal');
-    const submitBtn = document.getElementById('submitBtn');
+    const count = parseInt(document.getElementById('ticketCount').value) || 1;
+    const total = count * TICKET_PRICE;
 
-    if (!regType) {
-      summaryDiv.style.display = 'none';
-      submitBtn.disabled = true;
-      return;
-    }
-
-    let lines = [];
-    let total = 0;
-
-    if (regType === 'individual') {
-      lines.push({ label: 'Individual Golfer', amount: PRICES.golfer });
-      total += PRICES.golfer;
-    } else if (regType === 'team') {
-      lines.push({ label: 'Team of 4 Golfers (4 × $125)', amount: PRICES.golfer * 4 });
-      total += PRICES.golfer * 4;
-    } else if (regType === 'dinner') {
-      const count = parseInt(document.getElementById('dinnerCount').value) || 1;
-      lines.push({ label: `Dinner Guest${count > 1 ? 's' : ''} (${count} × $40)`, amount: count * PRICES.dinner });
-      total += count * PRICES.dinner;
-    }
-
-    const sponsorTier = document.getElementById('sponsorTier').value;
-    if (sponsorTier) {
-      const tierPrice = PRICES.sponsor[sponsorTier];
-      const tierName = { gold: 'Gold', silver: 'Silver', bronze: 'Bronze', hole: 'Hole' }[sponsorTier];
-      lines.push({ label: `${tierName} Sponsorship`, amount: tierPrice });
-      total += tierPrice;
-    }
-
-    linesDiv.innerHTML = lines.map(l =>
-      `<div class="order-line"><span>${l.label}</span><span>$${l.amount.toLocaleString()}</span></div>`
-    ).join('');
-    totalEl.textContent = '$' + total.toLocaleString();
-    summaryDiv.style.display = 'block';
-    submitBtn.disabled = total === 0;
+    document.getElementById('summaryLines').innerHTML =
+      `<div class="order-line"><span>Pre-Registration (${count} × $${TICKET_PRICE})</span><span>$${total.toLocaleString()}</span></div>`;
+    document.getElementById('summaryTotal').textContent = '$' + total.toLocaleString();
   }
 
   // ── FORM SUBMISSION ───────────────────────────────
   async function handleSubmit() {
     const btn = document.getElementById('submitBtn');
 
-    // Basic validation
-    if (!regType) { showToast('Please select a registration type.', true); return; }
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
 
-    if ((regType === 'individual' || regType === 'team') && !document.getElementById('leaderName').value.trim()) {
-      showToast('Please enter the team leader name.', true); return;
-    }
-    if ((regType === 'individual' || regType === 'team') && !document.getElementById('leaderEmail').value.trim()) {
-      showToast('Please enter the team leader email.', true); return;
-    }
-    if (regType === 'dinner' && !document.getElementById('dinnerName').value.trim()) {
-      showToast('Please enter your name.', true); return;
-    }
+    if (!name) { showToast('Please enter your full name.', true); return; }
+    if (!email) { showToast('Please enter your email address.', true); return; }
+    if (!phone) { showToast('Please enter your phone number.', true); return; }
 
-    const sponsorTier = document.getElementById('sponsorTier').value;
-    if (sponsorTier && !document.getElementById('sponsorName').value.trim()) {
-      showToast('Please enter a company/individual name for the sponsorship.', true); return;
-    }
+    const count = parseInt(document.getElementById('ticketCount').value) || 1;
+    const guestNames = document.getElementById('guestNames').value.trim();
+    const total = count * TICKET_PRICE;
 
     btn.disabled = true;
     btn.textContent = 'Submitting…';
 
-    // Build payload
     const payload = {
-      registration_type: regType,
+      name: name,
+      email: email,
+      phone: phone,
+      ticket_count: count,
+      guest_names: guestNames,
+      total_amount: total,
+      payment_status: 'pending',
       submitted_at: new Date().toISOString(),
     };
 
-    if (regType === 'individual' || regType === 'team') {
-      payload.leader_name = document.getElementById('leaderName').value.trim();
-      payload.leader_email = document.getElementById('leaderEmail').value.trim();
-      payload.leader_phone = document.getElementById('leaderPhone').value.trim();
-    }
-
-    if (regType === 'team') {
-      payload.teammates = [
-        { name: document.getElementById('t2name').value.trim(), email: document.getElementById('t2email').value.trim(), phone: document.getElementById('t2phone').value.trim() },
-        { name: document.getElementById('t3name').value.trim(), email: document.getElementById('t3email').value.trim(), phone: document.getElementById('t3phone').value.trim() },
-        { name: document.getElementById('t4name').value.trim(), email: document.getElementById('t4email').value.trim(), phone: document.getElementById('t4phone').value.trim() },
-      ];
-    }
-
-    if (regType === 'dinner') {
-      payload.dinner_guest_name = document.getElementById('dinnerName').value.trim();
-      payload.dinner_guest_email = document.getElementById('dinnerEmail').value.trim();
-      payload.dinner_guest_phone = document.getElementById('dinnerPhone').value.trim();
-      payload.dinner_guest_count = parseInt(document.getElementById('dinnerCount').value);
-    }
-
-    if (sponsorTier) {
-      payload.sponsor_tier = sponsorTier;
-      payload.sponsor_name = document.getElementById('sponsorName').value.trim();
-      payload.sponsor_address = document.getElementById('sponsorAddress').value.trim();
-      payload.sponsor_phone = document.getElementById('sponsorPhone').value.trim();
-      payload.sponsor_email = document.getElementById('sponsorEmail').value.trim();
-    }
-
-    // Calculate total
-    let total = 0;
-    if (regType === 'individual') total += 125;
-    if (regType === 'team') total += 500;
-    if (regType === 'dinner') total += parseInt(document.getElementById('dinnerCount').value) * 40;
-    if (sponsorTier) total += PRICES.sponsor[sponsorTier];
-    payload.total_amount = total;
-    payload.payment_status = 'pending';
-
     try {
-      const { error } = await db.from('golf_registrations').insert([payload]);
+      const { error } = await db.from('bingo_registrations').insert([payload]);
       if (error) throw error;
 
       // Build confirmation summary
-      const typeLabels = { individual: 'Individual Golfer', team: 'Team (Foursome)', sponsor: 'Sponsor Only', dinner: 'Dinner Guest' };
-      const sponsorLabels = { gold: 'Gold Sponsor — $950', silver: 'Silver Sponsor — $650', bronze: 'Bronze Sponsor — $500', hole: 'Hole Sponsor — $100' };
-      const dinnerCount = regType === 'dinner' ? parseInt(document.getElementById('dinnerCount').value) : 0;
-
       let summaryHTML = `<div style="font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:12px;">Registration Summary</div>`;
 
       summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
-        <span>Registration Type</span><span style="color:var(--gold-light);font-weight:600;">${typeLabels[regType]}</span>
+        <span>Name</span><span style="color:var(--gold-light);font-weight:600;">${name}</span>
       </div>`;
 
-      if (regType === 'individual' || regType === 'team') {
-        const name = document.getElementById('leaderName').value.trim();
-        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
-          <span>Name</span><span style="color:var(--gold-light);font-weight:600;">${name}</span>
-        </div>`;
-        const price = regType === 'team' ? '$500 (4 × $125)' : '$125';
-        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
-          <span>Golf Entry</span><span style="color:var(--gold-light);font-weight:600;">${price}</span>
-        </div>`;
-      }
-
-      if (regType === 'dinner') {
-        const name = document.getElementById('dinnerName').value.trim();
-        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
-          <span>Name</span><span style="color:var(--gold-light);font-weight:600;">${name}</span>
-        </div>`;
-        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
-          <span>Dinner Guests</span><span style="color:var(--gold-light);font-weight:600;">${dinnerCount} × $40 = $${dinnerCount * 40}</span>
-        </div>`;
-      }
-
-      if (sponsorTier) {
-        const sName = document.getElementById('sponsorName').value.trim();
-        summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
-          <span>Sponsorship</span><span style="color:var(--gold-light);font-weight:600;">${sponsorLabels[sponsorTier]}</span>
-        </div>`;
-        if (sName) summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
-          <span>Sponsor Name</span><span style="color:var(--gold-light);font-weight:600;">${sName}</span>
-        </div>`;
-      }
+      summaryHTML += `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.9rem;color:#fff;">
+        <span>Attendees</span><span style="color:var(--gold-light);font-weight:600;">${count} × $${TICKET_PRICE}</span>
+      </div>`;
 
       summaryHTML += `<div style="display:flex;justify-content:space-between;padding:12px 0 0;font-size:1rem;font-weight:700;color:var(--gold-light);">
         <span>Total</span><span>$${total.toLocaleString()}</span>
@@ -1203,8 +931,9 @@
     } catch (err) {
       console.error(err);
       showToast('There was an error submitting. Please try again or email us directly.', true);
+    } finally {
       btn.disabled = false;
-      btn.textContent = 'Complete Registration';
+      btn.textContent = 'Complete Pre-Registration';
     }
   }
 
@@ -1214,21 +943,15 @@
     document.getElementById('mainForm').style.display = 'block';
     document.getElementById('confirmationSummary').innerHTML = '';
 
-    // Reset all inputs
-    document.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
-    document.querySelectorAll('.reg-type-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('golferSection').classList.add('hidden');
-    document.getElementById('teammatesSection').classList.add('hidden');
-    document.getElementById('dinnerSection').classList.add('hidden');
-    document.getElementById('sponsorSection').classList.add('hidden');
-    document.getElementById('sponsorDetailsFields').classList.add('hidden');
-    document.getElementById('orderSummary').style.display = 'none';
-    document.getElementById('submitBtn').disabled = true;
-    document.getElementById('submitBtn').textContent = 'Complete Registration';
-    regType = null;
+    document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+    document.getElementById('ticketCount').value = '1';
+    updateSummary();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // ── INIT ──────────────────────────────────────────
+  updateSummary();
 
   // ── TOAST ─────────────────────────────────────────
   function showToast(msg, isError = false) {

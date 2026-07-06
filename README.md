@@ -1,56 +1,55 @@
-# S.T.A.R. Golf Classic 2026
+# S.T.A.R. Designer Purse Bingo & Tricky Tray 2025
 
-Registration page for the S.T.A.R. (Serving To Aid & Restore) Golf Classic fundraiser.
+Pre-registration page for the S.T.A.R. (Serving To Aid & Restore) Designer Purse Bingo & Tricky Tray fundraiser.
 
-**Event:** Sunday, June 28, 2026  
-**Venue:** Green Pond Country Club, 3604 Farmersville Rd, Bethlehem, PA 18020  
-**Registration Deadline:** June 10, 2026
+**Event:** Saturday, September 20, 2025 — doors open 12:00 PM, games start 1:00 PM  
+**Venue:** American Club of Coplay, 300 Cherry St, Coplay, PA 18037  
+**Pricing:** $25 pre-registration · $30 at the door  
+**Also featuring:** Tricky Tray, 50/50 Raffle, toiletries donation raffle, food for purchase. No advance seat reservations.
 
 ---
 
 ## File Structure
 
 ```
-star-golf-classic/
-├── index.html          # Main registration page
+starfundraiser/
+├── index.html          # Main pre-registration page
 ├── images/
-│   ├── hero-bg.jpg     # Hero section background photo
+│   ├── bingo-hero.jpg  # Hero section background photo
 │   └── STARLogo.svg    # S.T.A.R. organization logo
 └── README.md
 ```
 
 ## Setup
 
-1. **Supabase** — open `index.html` and replace the two placeholders near the bottom of the file:
+1. **Hero image** — save the bingo photo as `images/bingo-hero.jpg`. If the file is missing, the hero falls back to a solid navy background.
+
+2. **Supabase** — open `index.html` and replace the two placeholders near the bottom of the file:
    ```js
    const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
    const SUPABASE_KEY = 'YOUR_ANON_KEY';
    ```
 
-2. **Supabase Table** — create a `golf_registrations` table. Suggested schema:
+3. **Supabase Table** — create a `bingo_registrations` table. Suggested schema:
    ```sql
-   create table golf_registrations (
+   create table bingo_registrations (
      id uuid default gen_random_uuid() primary key,
-     registration_type text,
-     leader_name text,
-     leader_email text,
-     leader_phone text,
-     teammates jsonb,
-     dinner_guest_name text,
-     dinner_guest_email text,
-     dinner_guest_phone text,
-     dinner_guest_count int,
-     sponsor_tier text,
-     sponsor_name text,
-     sponsor_address text,
-     sponsor_phone text,
-     sponsor_email text,
+     name text,
+     email text,
+     phone text,
+     ticket_count int,
+     guest_names text,
      total_amount int,
+     payment_status text,
      submitted_at timestamptz default now()
    );
    ```
 
-3. **Deploy** — this is a single static HTML file. Drop the entire folder into any static host:
+4. **Donorbox** — the success screen embeds a Donorbox campaign at
+   `https://donorbox.org/embed/star-purse-bingo-2025`. Update the iframe `src` in
+   `index.html` to your actual Donorbox campaign URL for this event.
+
+5. **Deploy** — this is a single static HTML file. Drop the entire folder into any static host:
    - GitHub Pages
    - Netlify (drag & drop the folder)
    - Vercel
@@ -58,8 +57,8 @@ star-golf-classic/
 
 ## Features
 
-- Individual golfer, team (foursome), sponsor-only, and dinner guest registration
-- Sponsorship tiers: Gold ($950), Silver ($650), Bronze ($500), Hole ($100)
-- Live order summary with running total
-- All submissions saved to Supabase
+- $25/person pre-registration with attendee count (1–10) and live total
+- Payment after registration via Donorbox (card) or Venmo (@starbethlehem)
+- Event highlights: Designer Purse Bingo, Tricky Tray, 50/50 Raffle, toiletries donation raffle
+- All submissions saved to Supabase with `payment_status: pending`
 - Fully responsive (mobile + desktop)
