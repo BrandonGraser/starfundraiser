@@ -46,7 +46,7 @@ starfundraiser/
    ```
 
 4. **Donorbox** — the success screen embeds a Donorbox campaign at
-   `https://donorbox.org/embed/star-purse-bingo-2026`. Update the iframe `src` in
+   `https://donorbox.org/embed/star-purse-bingo-2025`. Update the iframe `src` in
    `index.html` to your actual Donorbox campaign URL for this event.
 
 5. **Deploy** — this is a single static HTML file. Drop the entire folder into any static host:
