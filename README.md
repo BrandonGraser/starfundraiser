@@ -1,8 +1,8 @@
-# S.T.A.R. Designer Purse Bingo & Tricky Tray 2025
+# S.T.A.R. Designer Purse Bingo & Tricky Tray 2026
 
 Pre-registration page for the S.T.A.R. (Serving To Aid & Restore) Designer Purse Bingo & Tricky Tray fundraiser.
 
-**Event:** Saturday, September 20, 2025 — doors open 12:00 PM, games start 1:00 PM  
+**Event:** Sunday, September 20, 2026 — doors open 12:00 PM, games start 1:00 PM  
 **Venue:** American Club of Coplay, 300 Cherry St, Coplay, PA 18037  
 **Pricing:** $25 pre-registration · $30 at the door  
 **Also featuring:** Tricky Tray, 50/50 Raffle, toiletries donation raffle, food for purchase. No advance seat reservations.
@@ -46,7 +46,7 @@ starfundraiser/
    ```
 
 4. **Donorbox** — the success screen embeds a Donorbox campaign at
-   `https://donorbox.org/embed/star-purse-bingo-2025`. Update the iframe `src` in
+   `https://donorbox.org/embed/star-purse-bingo-2026`. Update the iframe `src` in
    `index.html` to your actual Donorbox campaign URL for this event.
 
 5. **Deploy** — this is a single static HTML file. Drop the entire folder into any static host:
